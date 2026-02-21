@@ -90,7 +90,7 @@ export default function Navbar() {
             onClick={() => handleNav("#contact")}
             className="ml-4 px-5 py-2 bg-orange-500 hover:bg-orange-400 text-white text-sm font-semibold rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-orange-500/25"
           >
-            Hire Me
+            Open to Work
           </button>
         </motion.div>
 
@@ -129,7 +129,7 @@ export default function Navbar() {
                 onClick={() => handleNav("#contact")}
                 className="mt-2 px-4 py-3 bg-orange-500 hover:bg-orange-400 text-white font-semibold rounded-lg text-center transition-colors"
               >
-                Hire Me
+                Open to Work
               </button>
             </div>
           </motion.div>

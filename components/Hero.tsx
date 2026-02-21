@@ -1,6 +1,5 @@
 'use client';
 import { motion } from "framer-motion";
-import Image from "next/image";
 
 const socials = [
   {
@@ -36,7 +35,7 @@ const stats = [
   { value: "4.0", label: "GPA" },
   { value: "3+", label: "Years Exp" },
   { value: "5+", label: "Projects" },
-  { value: "20+", label: "Clients Onboarded" },
+  { value: "2", label: "Degrees" },
 ];
 
 export default function Hero() {
@@ -63,7 +62,7 @@ export default function Hero() {
               className="flex items-center gap-3 mb-6"
             >
               <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-              <span className="text-slate-400 text-sm font-medium">Available for opportunities</span>
+              <span className="text-slate-400 text-sm font-medium">Open to Co-op &amp; Full-time Roles</span>
             </motion.div>
 
             <motion.h1
@@ -104,8 +103,8 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="text-slate-400 leading-relaxed mb-10 max-w-lg"
             >
-              I build polished, production-ready web and mobile applications.
-              From consumer iOS apps to full-stack platforms — I take products from idea to launch.
+              Software developer with 3+ years of industry experience, currently pursuing an MCS at Northeastern University.
+              I build full-stack web apps, REST APIs, and native iOS/macOS apps — and I&apos;m actively looking for my next opportunity.
             </motion.p>
 
             <motion.div
@@ -124,7 +123,7 @@ export default function Hero() {
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
                 className="px-6 py-3 border border-white/10 hover:border-white/30 text-white font-semibold rounded-xl transition-all duration-200 hover:bg-white/5 hover:-translate-y-0.5"
               >
-                Contact Me
+                Get In Touch
               </button>
             </motion.div>
 
@@ -178,22 +177,21 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Manchester United card */}
-            <div className="relative w-full rounded-2xl overflow-hidden border border-white/5 shadow-2xl">
-              <Image
-                src="/mu-wallpaper.jpg"
-                alt="Manchester United fan"
-                width={600}
-                height={200}
-                className="w-full h-36 object-cover opacity-80"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/40 to-transparent" />
-              <div className="absolute bottom-3 left-4 flex items-center gap-2">
-                <span className="text-xl">🔴</span>
-                <div>
-                  <p className="text-white font-bold text-sm">Manchester United Fan</p>
-                  <p className="text-slate-400 text-xs">#GGMU · Glory Glory Man United</p>
-                </div>
+            {/* Interests card */}
+            <div className="w-full bg-gray-900 border border-white/5 rounded-2xl p-5">
+              <p className="text-slate-500 text-xs font-semibold uppercase tracking-widest mb-3">Quick Facts</p>
+              <div className="space-y-2">
+                {[
+                  { icon: "🔴", text: "Lifelong Manchester United fan — Glory Glory Man United" },
+                  { icon: "⚽", text: "Love playing football with friends on weekends" },
+                  { icon: "📱", text: "Building BrokeTogether — coming soon to App Store & Mac" },
+                  { icon: "☕", text: "Coffee-fuelled late-night coding sessions" },
+                ].map(({ icon, text }) => (
+                  <div key={text} className="flex items-start gap-2.5">
+                    <span className="text-base flex-shrink-0 mt-0.5">{icon}</span>
+                    <p className="text-slate-400 text-xs leading-relaxed">{text}</p>
+                  </div>
+                ))}
               </div>
             </div>
 

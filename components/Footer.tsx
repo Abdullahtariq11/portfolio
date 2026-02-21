@@ -10,10 +10,10 @@ export default function Footer() {
             <span className="text-white font-bold">Abdullah Tariq</span>
           </div>
           <p className="text-slate-500 text-xs">
-            Software Developer · Founder of CodeInstincts · Vancouver, BC
+            Software Developer · MCS @ Northeastern · Vancouver, BC
           </p>
           <p className="text-slate-600 text-xs mt-1">
-            🔴 Glory Glory Man United
+            🔴 Glory Glory Man United · Open to Co-op &amp; Full-time
           </p>
         </div>
 

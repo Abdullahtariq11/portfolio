@@ -6,45 +6,76 @@ const experience = [
   {
     title: "Software Test Engineer II",
     company: "Gaming Laboratories International LLC",
-    period: "Mar 2022 – Present",
-    location: "Burnaby, BC",
+    period: "Dec 2023 – Present",
+    location: "Burnaby, BC · Hybrid",
     type: "Full-time",
     color: "bg-orange-500",
     bullets: [
-      "Reduced post-release defects by 15% through regression and integration testing across the SDLC.",
-      "Supported onboarding of 20+ client integrations into production for iGaming platforms.",
-      "Executed back-end SQL data validation across distributed environments for transaction accuracy.",
-      "Conducted API testing with Postman and Swagger for JSON/XML response verification.",
-      "Tracked defects via JIRA ensuring compliance with technical and regulatory requirements.",
-      "Collaborated cross-functionally to reduce deployment delays by 20%.",
+      "Conducted comprehensive regression testing at various phases of the SDLC to ensure existing functionality remained intact after new updates.",
+      "Performed integration testing and validated software modifications for client iGaming platforms and games, ensuring seamless integration.",
+      "Meticulously documented results of regression and integration testing, providing detailed reports on software modifications.",
+      "Utilized JIRA to formalize test results, report bugs, and document game defects in accordance with technical requirements and regulations.",
+      "Interacted closely with developers to follow up on defects and issues, providing detailed feedback and collaborating on solutions.",
+      "Maintained clear and proactive communication regarding the status of testing activities with all relevant internal and external parties.",
+    ],
+  },
+  {
+    title: "Software Test Engineer I",
+    company: "Gaming Laboratories International LLC",
+    period: "Feb 2022 – Dec 2023",
+    location: "Burnaby, BC",
+    type: "Full-time",
+    color: "bg-amber-500",
+    bullets: [
+      "Performed regression testing at various phases of the development life cycle for impacted existing functionality.",
+      "Documented results of regression testing, integration testing, and software modification of client iGaming platforms and games.",
+      "Formalized test results and reported bugs and game defects on JIRA, according to technical requirements and regulations.",
+      "Interacted with developers to follow up on defects and issues.",
+      "Proactively communicated the status of testing with all relevant internal and external parties.",
     ],
   },
   {
     title: "Software Developer",
     company: "Space Chicken",
     period: "Apr 2025 – Aug 2025",
-    location: "Vancouver, BC",
+    location: "Remote",
     type: "Contract · Part-time",
     color: "bg-green-500",
     bullets: [
-      "Built and deployed the official restaurant website using Next.js and Tailwind CSS.",
-      "Implemented a responsive, SEO-optimized UI with interactive menu, reviews, and location integration.",
-      "Collaborated with the business owner to integrate backend features using Express.js.",
-      "Maintained and improved site performance, accessibility, and overall UX.",
+      "Designed, developed, and deployed the official website for Space Chicken using Next.js and TailwindCSS.",
+      "Delivered a fully responsive, SEO-optimized, and user-friendly site with interactive menu, customer reviews, Google Maps location & hours, and social media integration.",
+      "Continuously maintained and enhanced the site to improve performance, accessibility, and user experience.",
+      "Planned and developed backend functionality using ASP.NET Core.",
+      "Collaborated directly with the business owner for ongoing improvements aligned with business goals.",
     ],
   },
   {
     title: "Electromechanical Technologist",
     company: "Algo Communication Products Ltd",
-    period: "Sep 2020 – Dec 2021",
+    period: "Aug 2021 – Dec 2021",
     location: "Burnaby, BC",
     type: "Co-op",
     color: "bg-blue-500",
     bullets: [
-      "Resolved firmware control SIP communication bugs, improving system reliability by 25%.",
-      "Collaborated with production team on standardized test cases including power consumption & firmware.",
+      "Tested user interface protocols and scripts to locate bugs in firmware control SIP communication products.",
+      "Collaborated with production team to test devices for standardized test cases including structural uniformity, power consumption, and firmware installation.",
       "Created and maintained automated test scripts using WebdriverIO.",
-      "Authored comprehensive test documentation improving testing traceability by 30%.",
+      "Developed and maintained test documentation, including test plans, test cases, and test reports.",
+    ],
+  },
+  {
+    title: "Electromechanical Technologist",
+    company: "Algo Communication Products Ltd",
+    period: "Sep 2020 – Jan 2021",
+    location: "Burnaby, BC",
+    type: "Co-op",
+    color: "bg-cyan-500",
+    bullets: [
+      "Tested user interface protocols and scripts to locate bugs in firmware control SIP communication products.",
+      "Collaborated with production team on standardized test cases including structural uniformity and power consumption.",
+      "Performed product verification testing with standardized operating procedures.",
+      "Identified and documented defects using JIRA and worked closely with developers to resolve them.",
+      "Assisted with the development and execution of test plans and test cases for web-based applications.",
     ],
   },
 ];
@@ -78,12 +109,12 @@ const skillGroups = [
 ];
 
 const interests = [
-  { icon: "🔴", label: "Manchester United", desc: "Lifelong fan. Glory Glory Man United. #GGMU" },
-  { icon: "💻", label: "Building Products", desc: "Turning ideas into real, shipped software" },
-  { icon: "📱", label: "iOS Development", desc: "Native Swift & SwiftUI apps" },
+  { icon: "⚽", label: "Football", desc: "Love playing football with friends — nothing beats a good weekend game" },
+  { icon: "🔴", label: "Manchester United", desc: "Lifelong fan through thick and thin. Glory Glory Man United. #GGMU" },
+  { icon: "💻", label: "Building Products", desc: "Turning ideas into real, shipped software — from concept to production" },
+  { icon: "📱", label: "iOS Development", desc: "Building native Swift & SwiftUI apps for iPhone and Mac" },
   { icon: "🎮", label: "Gaming", desc: "Strategy, RPGs, and everything in between" },
-  { icon: "📚", label: "Computer Science", desc: "Always learning — currently MCS at Northeastern" },
-  { icon: "☕", label: "Coffee & Code", desc: "Best combo for late-night builds" },
+  { icon: "☕", label: "Coffee & Code", desc: "Best combo for late-night builds and debugging sessions" },
 ];
 
 type Tab = "about" | "experience" | "education" | "skills" | "interests";
@@ -156,7 +187,7 @@ export default function About() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {[
                   { value: "4.0", label: "GPA", sub: "Northeastern University" },
-                  { value: "3+", label: "Years", sub: "Professional Experience" },
+                  { value: "3+", label: "Years", sub: "Industry Experience" },
                   { value: "5+", label: "Projects", sub: "Shipped & Personal" },
                 ].map(({ value, label, sub }) => (
                   <div key={label} className="bg-gray-900 border border-white/5 rounded-2xl p-6 text-center">
@@ -171,22 +202,22 @@ export default function About() {
                   I&apos;m a software developer with a background spanning mechatronic systems engineering
                   and computer science. Currently pursuing my{" "}
                   <span className="text-indigo-400 font-semibold">Master of Computer Science at Northeastern University</span>{" "}
-                  (GPA 4.0), I blend engineering rigour with modern software development to build products that actually matter.
+                  (GPA 4.0), I combine engineering rigour with modern software development to build things that matter.
                 </p>
                 <p>
-                  Under <span className="text-orange-400 font-semibold">CodeInstincts</span>, I design and develop
-                  web and mobile applications — from consumer iOS apps to full-stack platforms. I love the full product
-                  lifecycle: idea, design, build, ship, iterate.
+                  I have hands-on experience building full-stack web applications, REST APIs, and native iOS/macOS apps — from idea to deployment.
+                  I love the full product lifecycle and thrive in environments where I can contribute across the stack.
                 </p>
                 <p>
-                  Day-to-day I work as a <span className="text-white font-semibold">Software Test Engineer II</span> at Gaming Laboratories International,
-                  where I&apos;ve contributed to a 15% reduction in post-release defects and helped onboard 20+ client integrations into production.
+                  Currently working as a <span className="text-white font-semibold">Software Test Engineer II</span> at Gaming Laboratories International,
+                  with 3+ years of experience in software quality, API testing, and cross-functional collaboration in an enterprise iGaming environment.
+                  I&apos;m actively seeking <span className="text-orange-400 font-semibold">co-op and full-time software developer roles</span> where I can grow and make an impact.
                 </p>
                 <div className="pt-2 flex flex-wrap gap-3">
                   {[
                     { icon: "📍", text: "Vancouver, BC" },
                     { icon: "🎓", text: "MCS @ Northeastern" },
-                    { icon: "💼", text: "Open to Opportunities" },
+                    { icon: "💼", text: "Seeking Co-op & Full-time" },
                     { icon: "🔴", text: "Man United Fan" },
                   ].map(({ icon, text }) => (
                     <span key={text} className="flex items-center gap-1.5 text-sm text-slate-400 bg-gray-800 border border-white/5 px-3 py-1.5 rounded-full">
