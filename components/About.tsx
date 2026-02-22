@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, cubicBezier } from "framer-motion";
 
 /* ── data ─────────────────────────────────────────────────── */
 type Role = {
@@ -118,7 +118,7 @@ const education = [
 /* ── shared variants ──────────────────────────────────────── */
 const fadeUp = {
   hidden: { opacity: 0, y: 18 },
-  show:   { opacity: 1, y: 0,  transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+  show:   { opacity: 1, y: 0,  transition: { duration: 0.5, ease: cubicBezier(0.22, 1, 0.36, 1) } },
 };
 const stagger = (delay = 0) => ({
   hidden: {},
@@ -145,7 +145,7 @@ export default function About() {
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">Brand</p>
             <h2 className="mt-2 text-5xl leading-[0.95] text-[var(--ink)]">Abdullah Tariq</h2>
             <p className="mt-3 text-sm leading-relaxed text-[var(--muted)]">
-              Software developer portfolio focused on production quality, reliable delivery, and product execution.
+              Full-stack developer & CS grad student. I build things that ship, work reliably, and solve real problems.
             </p>
           </motion.div>
 
@@ -167,6 +167,45 @@ export default function About() {
                 {skill}
               </motion.span>
             ))}
+          </motion.div>
+        </motion.div>
+
+        {/* ── Story card ───────────────────────────────────── */}
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={stagger()}
+          className="mb-6 rounded-[1.75rem] border border-[var(--line)] bg-[#111111] p-7 lg:grid lg:grid-cols-[auto_1fr] lg:gap-8"
+        >
+          {/* left accent label */}
+          <motion.div variants={fadeUp} className="mb-4 lg:mb-0">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">Background</p>
+            <div className="mt-3 hidden h-full w-px bg-[var(--line)] lg:block" />
+          </motion.div>
+
+          {/* right content */}
+          <motion.div variants={stagger(0.08)} className="space-y-5">
+            {/* quote + father paragraph — fancy italic serif */}
+            <motion.div variants={fadeUp} className="space-y-3">
+              <p
+                className="text-2xl leading-snug text-[var(--ink)]"
+                style={{ fontFamily: "var(--font-heading)", fontStyle: "italic", fontWeight: 500 }}
+              >
+                &ldquo;Work hard, be honest, and never stop learning.&rdquo;
+              </p>
+              <p
+                className="text-lg leading-relaxed text-[var(--muted)]"
+                style={{ fontFamily: "var(--font-heading)", fontStyle: "italic", fontWeight: 500 }}
+              >
+                My father worked incredibly hard to give me the best education he could. He led by example every single day, and the values he showed me, honesty, dedication, and a quiet relentless work ethic, are the foundation of everything I do.
+              </p>
+            </motion.div>
+
+            {/* background paragraph — regular body */}
+            <motion.p variants={fadeUp} className="text-sm leading-relaxed text-[var(--muted)]">
+              At 18 I moved to Canada on my own to pursue something bigger. I worked part time through my entire undergrad at Simon Fraser University and graduated with a degree in Mechatronic Systems Engineering. Now I am completing a Master&apos;s in Computer Science at Northeastern University while working full time. Every step has been a reflection of what my father showed me.
+            </motion.p>
           </motion.div>
         </motion.div>
 
@@ -247,7 +286,7 @@ export default function About() {
                   key={`${role.company}-${role.title}-${role.period}`}
                   variants={{
                     hidden: { opacity: 0, y: 20 },
-                    show:   { opacity: 1, y: 0, transition: { duration: 0.45, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] } },
+                    show:   { opacity: 1, y: 0, transition: { duration: 0.45, delay: i * 0.07, ease: cubicBezier(0.22, 1, 0.36, 1) } },
                   }}
                   whileHover={{ borderColor: isOpen ? "rgba(255,122,61,0.3)" : "rgba(255,255,255,0.18)" }}
                   className="overflow-hidden rounded-2xl border border-[var(--line)] bg-[#151515] transition-colors"

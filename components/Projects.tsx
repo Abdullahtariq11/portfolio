@@ -16,6 +16,7 @@ type Project = {
   codeLabel?: string;
   extraLinks?: { label: string; url: string }[];
   images: string[];
+  mobileScreenshots?: boolean;
   demoVideo?: string;
   stores?: { appStore?: string; playStore?: string };
 };
@@ -27,10 +28,17 @@ const projects: Project[] = [
     period: "Nov 2025 - Jan 2026",
     description:
       "Shared-expense product for roommates and friends. This site is the future launch hub for store downloads.",
-    tech: ["Spring Boot", "PostgreSQL", "JWT", "Docker", "Railway", "SwiftUI"],
+    tech: ["Spring Boot", "PostgreSQL", "JWT", "Docker", "Railway", "React Native"],
     codeUrl: "https://github.com/Abdullahtariq11/BrokeTogetherBackend",
     codeLabel: "Backend Source",
-    images: ["/projects/broketogether-1.svg", "/projects/broketogether-2.svg"],
+    images: [
+      "/projects/broketogether-1.png",
+      "/projects/broketogether-2.png",
+      "/projects/broketogether-3.png",
+      "/projects/broketogether-4.png",
+      "/projects/broketogether-5.png",
+    ],
+    mobileScreenshots: true,
     stores: {},
   },
   {
@@ -42,7 +50,7 @@ const projects: Project[] = [
     tech: ["Next.js", "Tailwind CSS", "TypeScript", "ASP.NET Core"],
     demoUrl: "https://www.spacechicken.ca",
     demoLabel: "Live Demo",
-    images: ["/projects/spacechicken-1.svg", "/projects/spacechicken-2.svg"],
+    images: ["/projects/spacechicken-1.png"],
   },
   {
     name: "Premier Predict",
@@ -55,7 +63,13 @@ const projects: Project[] = [
     demoLabel: "Live Demo",
     codeUrl: "https://github.com/Abdullahtariq11",
     codeLabel: "GitHub Profile",
-    images: ["/projects/premierpredict-1.svg", "/projects/premierpredict-2.svg"],
+    images: [
+      "/projects/premierpredict-1.png",
+      "/projects/premierpredict-2.png",
+      "/projects/premierpredict-3.png",
+      "/projects/premierpredict-4.png",
+      "/projects/premierpredict-5.png",
+    ],
   },
   {
     name: "Budget App (Integrated)",
@@ -72,7 +86,7 @@ const projects: Project[] = [
       { label: "Backend API Demo", url: "https://budget-app-backend-self.vercel.app" },
       { label: "Backend Source",   url: "https://github.com/Abdullahtariq11/BudgetAppBackend" },
     ],
-    images: ["/projects/budgetapi-1.svg", "/projects/budgetapi-2.svg"],
+    images: ["/projects/budgetapp-1.png", "/projects/budgetapp-2.png"],
   },
   {
     name: "Doctor Lucky",
@@ -83,7 +97,7 @@ const projects: Project[] = [
     tech: ["Java", "Swing", "MVC", "OOP"],
     codeUrl: "https://github.com/Abdullahtariq11/BoardGame-DrLucky",
     codeLabel: "Source Code",
-    images: ["/projects/doctorlucky-1.svg", "/projects/doctorlucky-2.svg"],
+    images: ["/projects/doctorlucky-1.png"],
     demoVideo: "/projects/dr-lucky-demo.mov",
   },
 ];
@@ -150,70 +164,109 @@ export default function Projects() {
               <p className="mt-2 text-xs font-semibold uppercase tracking-[0.07em] text-[var(--muted)]">{project.status}</p>
               <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">{project.description}</p>
 
-              {/* image carousel */}
-              <div className="mt-5">
-                <div className="relative overflow-hidden rounded-xl border border-[var(--line)] bg-[#121212]">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={`${project.name}-${getSlide(project.name)}`}
-                      initial={{ opacity: 0, x: 12 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -12 }}
-                      transition={{ duration: 0.25 }}
-                    >
-                      <Image
-                        src={project.images[getSlide(project.name)]}
-                        alt={`${project.name} preview ${getSlide(project.name) + 1}`}
-                        width={1200}
-                        height={720}
-                        className="h-48 w-full object-cover md:h-52"
-                      />
-                    </motion.div>
-                  </AnimatePresence>
+              {/* image section — hidden when project has a demo video */}
+              {!project.demoVideo && (
+                <div className="mt-5">
+                  {project.mobileScreenshots ? (
+                    /* ── Portrait / mobile screenshot strip ── */
+                    <div className="overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                      <div className="flex gap-3" style={{ width: "max-content" }}>
+                        {project.images.map((src, idx) => (
+                          <motion.div
+                            key={src}
+                            initial={{ opacity: 0, y: 12 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.3, delay: idx * 0.06 }}
+                            viewport={{ once: true }}
+                            whileHover={{ y: -4, scale: 1.02 }}
+                            className="flex-shrink-0 overflow-hidden rounded-2xl border border-[var(--line)] bg-[#121212] shadow-lg"
+                            style={{ width: 130 }}
+                          >
+                            <Image
+                              src={src}
+                              alt={`${project.name} screen ${idx + 1}`}
+                              width={390}
+                              height={844}
+                              className="w-full object-cover"
+                            />
+                          </motion.div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    /* ── Landscape carousel ── */
+                    <>
+                      <div className="relative overflow-hidden rounded-xl border border-[var(--line)] bg-[#121212]">
+                        <AnimatePresence mode="wait">
+                          <motion.div
+                            key={`${project.name}-${getSlide(project.name)}`}
+                            initial={{ opacity: 0, x: 12 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -12 }}
+                            transition={{ duration: 0.25 }}
+                          >
+                            <Image
+                              src={project.images[getSlide(project.name)]}
+                              alt={`${project.name} preview ${getSlide(project.name) + 1}`}
+                              width={1200}
+                              height={720}
+                              className="h-48 w-full object-cover md:h-52"
+                            />
+                          </motion.div>
+                        </AnimatePresence>
 
-                  {/* prev / next */}
-                  <motion.button
-                    type="button"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => setSlide(project.name, getSlide(project.name) - 1, project.images.length)}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full border border-[var(--line)] bg-[#101010cc] px-2.5 py-1.5 text-xs font-semibold text-[var(--ink)]"
-                    aria-label={`Previous ${project.name} image`}
-                  >
-                    ←
-                  </motion.button>
-                  <motion.button
-                    type="button"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => setSlide(project.name, getSlide(project.name) + 1, project.images.length)}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full border border-[var(--line)] bg-[#101010cc] px-2.5 py-1.5 text-xs font-semibold text-[var(--ink)]"
-                    aria-label={`Next ${project.name} image`}
-                  >
-                    →
-                  </motion.button>
-                </div>
+                        {/* prev / next — only show when more than one image */}
+                        {project.images.length > 1 && (
+                          <>
+                            <motion.button
+                              type="button"
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.9 }}
+                              onClick={() => setSlide(project.name, getSlide(project.name) - 1, project.images.length)}
+                              className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full border border-[var(--line)] bg-[#101010cc] px-2.5 py-1.5 text-xs font-semibold text-[var(--ink)]"
+                              aria-label={`Previous ${project.name} image`}
+                            >
+                              ←
+                            </motion.button>
+                            <motion.button
+                              type="button"
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.9 }}
+                              onClick={() => setSlide(project.name, getSlide(project.name) + 1, project.images.length)}
+                              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full border border-[var(--line)] bg-[#101010cc] px-2.5 py-1.5 text-xs font-semibold text-[var(--ink)]"
+                              aria-label={`Next ${project.name} image`}
+                            >
+                              →
+                            </motion.button>
+                          </>
+                        )}
+                      </div>
 
-                {/* dots */}
-                <div className="mt-2 flex items-center justify-center gap-1.5">
-                  {project.images.map((_, dotIndex) => (
-                    <motion.button
-                      key={`${project.name}-dot-${dotIndex}`}
-                      type="button"
-                      onClick={() => setSlide(project.name, dotIndex, project.images.length)}
-                      aria-label={`Go to ${project.name} image ${dotIndex + 1}`}
-                      animate={{
-                        width: getSlide(project.name) === dotIndex ? 24 : 10,
-                        backgroundColor: getSlide(project.name) === dotIndex
-                          ? "var(--accent)"
-                          : "#6e6e6e",
-                      }}
-                      transition={{ duration: 0.25 }}
-                      className="h-1.5 rounded-full"
-                    />
-                  ))}
+                      {/* dots — only show when more than one image */}
+                      {project.images.length > 1 && (
+                        <div className="mt-2 flex items-center justify-center gap-1.5">
+                          {project.images.map((_, dotIndex) => (
+                            <motion.button
+                              key={`${project.name}-dot-${dotIndex}`}
+                              type="button"
+                              onClick={() => setSlide(project.name, dotIndex, project.images.length)}
+                              aria-label={`Go to ${project.name} image ${dotIndex + 1}`}
+                              animate={{
+                                width: getSlide(project.name) === dotIndex ? 24 : 10,
+                                backgroundColor: getSlide(project.name) === dotIndex
+                                  ? "var(--accent)"
+                                  : "#6e6e6e",
+                              }}
+                              transition={{ duration: 0.25 }}
+                              className="h-1.5 rounded-full"
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  )}
                 </div>
-              </div>
+              )}
 
               {/* demo video (Doctor Lucky) */}
               {project.demoVideo && (
@@ -259,26 +312,9 @@ export default function Projects() {
                 ))}
               </motion.div>
 
-              {/* links */}
+              {/* links — GitHub source only, no live demo buttons */}
               <div className="mt-6 flex flex-wrap gap-2">
-                {project.demoUrl ? (
-                  <motion.a
-                    href={project.demoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.04, boxShadow: "0 0 14px rgba(255,122,61,0.3)" }}
-                    whileTap={{ scale: 0.97 }}
-                    className="rounded-full border border-[var(--accent)] bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white"
-                  >
-                    {project.demoLabel ?? "Live Demo"}
-                  </motion.a>
-                ) : (
-                  <span className="rounded-full border border-[var(--line)] bg-[#1c1c1c] px-4 py-2 text-xs font-semibold text-[var(--muted)]">
-                    Demo Coming Soon
-                  </span>
-                )}
-
-                {project.codeUrl ? (
+                {project.codeUrl && (
                   <motion.a
                     href={project.codeUrl}
                     target="_blank"
@@ -289,25 +325,7 @@ export default function Projects() {
                   >
                     {project.codeLabel ?? "Source Code"}
                   </motion.a>
-                ) : (
-                  <span className="rounded-full border border-[var(--line)] bg-[#1b1b1b] px-4 py-2 text-xs font-semibold text-[var(--muted)]">
-                    Private Client Work
-                  </span>
                 )}
-
-                {project.extraLinks?.map((link) => (
-                  <motion.a
-                    key={`${project.name}-${link.label}`}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ scale: 1.04, borderColor: "rgba(255,255,255,0.3)" }}
-                    whileTap={{ scale: 0.97 }}
-                    className="rounded-full border border-[var(--line)] bg-[#1b1b1b] px-4 py-2 text-xs font-semibold text-[var(--ink)]"
-                  >
-                    {link.label}
-                  </motion.a>
-                ))}
               </div>
 
               {/* BrokeTogether store section */}

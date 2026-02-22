@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-const links = [
+const links: { label: string; href: string; primary: boolean; download?: boolean; external?: boolean }[] = [
   {
     label: "Download Resume",
     href: "/abdullah-tariq-resume.pdf",
@@ -20,7 +20,7 @@ const links = [
     external: true,
     primary: false,
   },
-] as const;
+];
 
 export default function Footer() {
   return (
@@ -44,7 +44,7 @@ export default function Footer() {
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">Contact</p>
             <h2 className="mt-3 text-5xl leading-[0.95] text-[var(--ink)]">Let&apos;s connect.</h2>
             <p className="mt-4 max-w-lg text-sm leading-relaxed text-[var(--muted)]">
-              Reach out directly for opportunities, collaborations, or product demos.
+              Reach out directly for opportunities or collaborations.
             </p>
           </motion.div>
 
@@ -65,7 +65,7 @@ export default function Footer() {
                 rel={external ? "noopener noreferrer" : undefined}
                 variants={{
                   hidden: { opacity: 0, x: 16 },
-                  show:   { opacity: 1, x: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } },
+                  show:   { opacity: 1, x: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
                 }}
                 whileHover={
                   primary

@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from "framer-motion";
 const infoCards = [
   { icon: "💻", title: "Full-time Roles",   desc: "Software Developer, Full-Stack, Backend, iOS/mobile positions" },
   { icon: "🎓", title: "Co-op Positions",   desc: "Software engineering co-ops aligned with my MCS program" },
-  { icon: "🚀", title: "Strong Tech Stack", desc: "Java, C#, TypeScript, React, Next.js, Spring Boot, ASP.NET Core" },
   { icon: "📍", title: "Location",          desc: "Based in Vancouver, BC — open to hybrid, remote, or on-site" },
 ] as const;
 
@@ -15,7 +14,7 @@ const opportunityTypes = ["Full-time", "Co-op", "Contract", "Remote", "Hybrid", 
 /* ── variants ─────────────────────────────────────────────── */
 const fadeUp = {
   hidden: { opacity: 0, y: 18 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as number[] } },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
 };
 const stagger = {
   hidden: {},
@@ -78,7 +77,7 @@ export default function Contact() {
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">Let&apos;s Connect</p>
           <h2 className="mt-2 text-5xl leading-[0.95] text-[var(--ink)]">Open to Opportunities</h2>
           <p className="mt-4 max-w-xl text-sm leading-relaxed text-[var(--muted)]">
-            I&apos;m actively looking for co-op and full-time software developer roles. If you have an opening or just want to connect, I&apos;d love to hear from you.
+            I&apos;m actively looking for co-op and full-time software developer roles. If you have an opening or just want to connect, reach out.
           </p>
         </motion.div>
 

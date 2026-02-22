@@ -41,7 +41,7 @@ const container = {
 };
 const item = {
   hidden: { opacity: 0, y: 16 },
-  show:   { opacity: 1, y: 0,  transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+  show:   { opacity: 1, y: 0,  transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
 };
 
 export default function Hero() {
@@ -90,7 +90,7 @@ export default function Hero() {
             <br />
             Software engineering,
             <br />
-            products, and demos.
+            built to last.
           </motion.h1>
 
           {/* sub */}
