@@ -72,7 +72,7 @@ const projects: Project[] = [
     ],
   },
   {
-    name: "Budget App (Integrated)",
+    name: "Budget App",
     status: "Full-stack project",
     period: "Oct 2024 - Jan 2025",
     description:
