@@ -1,236 +1,363 @@
-'use client';
+"use client";
+
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 type Project = {
-  icon: string;
-  title: string;
-  tag: string;
-  tagStyle: string;
+  name: string;
+  status: string;
   period: string;
   description: string;
-  bullets: string[];
   tech: string[];
-  platforms: string[];
-  featured?: boolean;
+  demoUrl?: string;
+  demoLabel?: string;
+  codeUrl?: string;
+  codeLabel?: string;
+  extraLinks?: { label: string; url: string }[];
+  images: string[];
+  demoVideo?: string;
+  stores?: { appStore?: string; playStore?: string };
 };
 
 const projects: Project[] = [
   {
-    icon: "💸",
-    title: "BrokeTogether",
-    tag: "Coming Soon",
-    tagStyle: "text-orange-300 bg-orange-500/10 border-orange-500/30",
-    period: "Nov 2025 – Jan 2026",
-    description: "Expense-splitting app for friends & roommates — without the awkwardness.",
-    bullets: [
-      "RESTful backend with Java Spring Boot for shared expenses and automated balance calculations.",
-      "PostgreSQL schema optimized for complex many-to-many user/group relationships.",
-      "Spring Security + JWT for secure multi-device access.",
-      "Dockerized deployment on Railway — 99.9% uptime, 30% faster deploys.",
-    ],
-    tech: ["Java", "Spring Boot", "PostgreSQL", "Docker", "Railway", "JWT"],
-    platforms: ["iOS", "macOS"],
-    featured: true,
+    name: "BrokeTogether",
+    status: "Product in development",
+    period: "Nov 2025 - Jan 2026",
+    description:
+      "Shared-expense product for roommates and friends. This site is the future launch hub for store downloads.",
+    tech: ["Spring Boot", "PostgreSQL", "JWT", "Docker", "Railway", "SwiftUI"],
+    codeUrl: "https://github.com/Abdullahtariq11/BrokeTogetherBackend",
+    codeLabel: "Backend Source",
+    images: ["/projects/broketogether-1.svg", "/projects/broketogether-2.svg"],
+    stores: {},
   },
   {
-    icon: "🍗",
-    title: "Space Chicken",
-    tag: "Live",
-    tagStyle: "text-green-300 bg-green-500/10 border-green-500/30",
-    period: "Apr – Aug 2025",
-    description: "Full web platform for a Vancouver restaurant — menu, reviews, location, ordering.",
-    bullets: [
-      "Next.js + Tailwind CSS with SEO-optimized, responsive UI.",
-      "Interactive menu, reviews, and Google Maps integration.",
-      "Express.js backend for dynamic features and performance.",
-    ],
-    tech: ["Next.js", "Tailwind CSS", "Express.js", "Node.js"],
-    platforms: ["Web"],
+    name: "Space Chicken",
+    status: "Live client project",
+    period: "Apr 2025 - Aug 2025",
+    description:
+      "Official restaurant website with SEO-driven pages, interactive menu, maps, reviews, and social integrations.",
+    tech: ["Next.js", "Tailwind CSS", "TypeScript", "ASP.NET Core"],
+    demoUrl: "https://www.spacechicken.ca",
+    demoLabel: "Live Demo",
+    images: ["/projects/spacechicken-1.svg", "/projects/spacechicken-2.svg"],
   },
   {
-    icon: "⚽",
-    title: "Premier Predict",
-    tag: "Personal",
-    tagStyle: "text-blue-300 bg-blue-500/10 border-blue-500/30",
-    period: "Oct – Dec 2025",
-    description: "Full-stack Premier League prediction platform with live data & leaderboards.",
-    bullets: [
-      "React, Express.js, Prisma ORM, PostgreSQL stack.",
-      "JWT auth, user profiles, score predictions with automatic pre-kickoff lock-in.",
-      "Dynamic leaderboard and dashboards powered by live PL API data.",
-      "Backend caching to handle rate limits and optimize performance.",
-    ],
-    tech: ["React", "Express.js", "Prisma", "PostgreSQL", "JWT"],
-    platforms: ["Web"],
+    name: "Premier Predict",
+    status: "Personal build",
+    period: "Oct 2025 - Dec 2025",
+    description:
+      "Prediction platform with match lock rules, dynamic ranking logic, and data-aware backend caching.",
+    tech: ["React", "Express", "Prisma", "PostgreSQL"],
+    demoUrl: "https://premier-predict.vercel.app/",
+    demoLabel: "Live Demo",
+    codeUrl: "https://github.com/Abdullahtariq11",
+    codeLabel: "GitHub Profile",
+    images: ["/projects/premierpredict-1.svg", "/projects/premierpredict-2.svg"],
   },
   {
-    icon: "💰",
-    title: "Budget App",
-    tag: "Personal",
-    tagStyle: "text-blue-300 bg-blue-500/10 border-blue-500/30",
-    period: "Oct 2024 – Jan 2025",
-    description: "Personal finance REST API — expenses, budgets, card balances, secure auth.",
-    bullets: [
-      ".NET 7 + ASP.NET Core with PostgreSQL and Entity Framework Core migrations.",
-      "BCrypt hashing + JWT for secure session management.",
-      "Modular endpoints for expenses, categories, and card management.",
-      "30% defect reduction via xUnit + Moq unit tests.",
+    name: "Budget App (Integrated)",
+    status: "Full-stack project",
+    period: "Oct 2024 - Jan 2025",
+    description:
+      "Integrated frontend + backend finance application for budgets, expenses, categories, and authentication.",
+    tech: ["React", "TypeScript", "ASP.NET Core", "EF Core", "PostgreSQL", "xUnit"],
+    demoUrl: "https://budget-app-frontend-rosy.vercel.app",
+    demoLabel: "Frontend Demo",
+    codeUrl: "https://github.com/Abdullahtariq11/BudgetAppFrontend",
+    codeLabel: "Frontend Source",
+    extraLinks: [
+      { label: "Backend API Demo", url: "https://budget-app-backend-self.vercel.app" },
+      { label: "Backend Source",   url: "https://github.com/Abdullahtariq11/BudgetAppBackend" },
     ],
-    tech: [".NET 7", "ASP.NET Core", "PostgreSQL", "EF Core", "xUnit", "JWT"],
-    platforms: ["API"],
+    images: ["/projects/budgetapi-1.svg", "/projects/budgetapi-2.svg"],
   },
   {
-    icon: "🎲",
-    title: "Doctor Lucky",
-    tag: "Academic",
-    tagStyle: "text-purple-300 bg-purple-500/10 border-purple-500/30",
-    period: "Sep – Dec 2025",
-    description: "Java desktop game with MVC architecture, OOP design patterns, and Java Swing UI.",
-    bullets: [
-      "MVC architecture with Java Swing for a responsive, modular desktop UI.",
-      "OOP principles and design patterns decoupling logic, UI, and controller.",
-      "Complete game flow control, state management, and user interaction mechanics.",
-    ],
-    tech: ["Java", "Java Swing", "MVC", "OOP Design Patterns"],
-    platforms: ["Desktop"],
+    name: "Doctor Lucky",
+    status: "Academic project",
+    period: "2025",
+    description:
+      "Java desktop board game implementation with MVC architecture and object-oriented design patterns.",
+    tech: ["Java", "Swing", "MVC", "OOP"],
+    codeUrl: "https://github.com/Abdullahtariq11/BoardGame-DrLucky",
+    codeLabel: "Source Code",
+    images: ["/projects/doctorlucky-1.svg", "/projects/doctorlucky-2.svg"],
+    demoVideo: "/projects/dr-lucky-demo.mov",
   },
 ];
 
+/* ── variants ─────────────────────────────────────────────── */
+const cardVariants = {
+  hidden: { opacity: 0, y: 22 },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] },
+  }),
+};
+
 export default function Projects() {
-  const [expanded, setExpanded] = useState<number | null>(null);
+  const [activeSlides, setActiveSlides] = useState<Record<string, number>>({});
+
+  const getSlide = (name: string) => activeSlides[name] ?? 0;
+  const setSlide = (name: string, next: number, total: number) => {
+    const wrapped = ((next % total) + total) % total;
+    setActiveSlides((prev) => ({ ...prev, [name]: wrapped }));
+  };
 
   return (
-    <section id="projects" className="py-24 bg-gray-900 relative">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+    <section id="projects" className="px-6 pb-24 pt-6 md:px-10 md:pb-28 md:pt-10">
+      <div className="mx-auto max-w-6xl">
 
-      <div className="max-w-6xl mx-auto px-6">
+        {/* header card */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           viewport={{ once: true }}
-          className="mb-12"
+          className="mb-5 rounded-[1.75rem] border border-[var(--line)] bg-[#111111] p-7"
         >
-          <p className="text-orange-400 text-sm font-semibold uppercase tracking-widest mb-2">What I&apos;ve Built</p>
-          <h2 className="text-3xl md:text-4xl font-black text-white mb-3">Projects</h2>
-          <p className="text-slate-400 max-w-xl">From shipped consumer products to personal engineering experiments.</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">Projects &amp; Demos</p>
+          <h2 className="mt-2 text-5xl leading-[0.95] text-[var(--ink)]">Product Showcase</h2>
+          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-[var(--muted)]">
+            A selection of shipped work, personal builds, and demos across web, API, mobile, and desktop.
+          </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {/* grid */}
+        <div className="grid gap-4 md:grid-cols-2">
           {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: index * 0.06 }}
-              viewport={{ once: true, amount: 0.2 }}
-              className={`relative bg-gray-950 border rounded-2xl p-6 flex flex-col group transition-all duration-300 hover:-translate-y-1 ${
-                project.featured
-                  ? "border-orange-500/30 hover:border-orange-500/60 shadow-lg shadow-orange-500/5"
-                  : "border-white/5 hover:border-white/15"
-              }`}
+            <motion.article
+              key={project.name}
+              custom={index}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.1 }}
+              whileHover={{ y: -4, borderColor: "rgba(255,122,61,0.22)" }}
+              className="flex flex-col rounded-2xl border border-[var(--line)] bg-[#151515] p-6 transition-colors"
             >
-              {project.featured && (
-                <div className="absolute top-4 right-4">
-                  <span className="text-xs font-bold text-orange-400 bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 rounded-full">
-                    ⭐ Featured
-                  </span>
+              {/* title row */}
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h3 className="text-3xl leading-none text-[var(--ink)]">{project.name}</h3>
+                <span className="rounded-full border border-[var(--line)] bg-[#1f1f1f] px-2.5 py-1 text-xs font-semibold text-[var(--muted)]">
+                  {project.period}
+                </span>
+              </div>
+
+              <p className="mt-2 text-xs font-semibold uppercase tracking-[0.07em] text-[var(--muted)]">{project.status}</p>
+              <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">{project.description}</p>
+
+              {/* image carousel */}
+              <div className="mt-5">
+                <div className="relative overflow-hidden rounded-xl border border-[var(--line)] bg-[#121212]">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={`${project.name}-${getSlide(project.name)}`}
+                      initial={{ opacity: 0, x: 12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -12 }}
+                      transition={{ duration: 0.25 }}
+                    >
+                      <Image
+                        src={project.images[getSlide(project.name)]}
+                        alt={`${project.name} preview ${getSlide(project.name) + 1}`}
+                        width={1200}
+                        height={720}
+                        className="h-48 w-full object-cover md:h-52"
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+
+                  {/* prev / next */}
+                  <motion.button
+                    type="button"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => setSlide(project.name, getSlide(project.name) - 1, project.images.length)}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full border border-[var(--line)] bg-[#101010cc] px-2.5 py-1.5 text-xs font-semibold text-[var(--ink)]"
+                    aria-label={`Previous ${project.name} image`}
+                  >
+                    ←
+                  </motion.button>
+                  <motion.button
+                    type="button"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => setSlide(project.name, getSlide(project.name) + 1, project.images.length)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full border border-[var(--line)] bg-[#101010cc] px-2.5 py-1.5 text-xs font-semibold text-[var(--ink)]"
+                    aria-label={`Next ${project.name} image`}
+                  >
+                    →
+                  </motion.button>
                 </div>
+
+                {/* dots */}
+                <div className="mt-2 flex items-center justify-center gap-1.5">
+                  {project.images.map((_, dotIndex) => (
+                    <motion.button
+                      key={`${project.name}-dot-${dotIndex}`}
+                      type="button"
+                      onClick={() => setSlide(project.name, dotIndex, project.images.length)}
+                      aria-label={`Go to ${project.name} image ${dotIndex + 1}`}
+                      animate={{
+                        width: getSlide(project.name) === dotIndex ? 24 : 10,
+                        backgroundColor: getSlide(project.name) === dotIndex
+                          ? "var(--accent)"
+                          : "#6e6e6e",
+                      }}
+                      transition={{ duration: 0.25 }}
+                      className="h-1.5 rounded-full"
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* demo video (Doctor Lucky) */}
+              {project.demoVideo && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                  viewport={{ once: true }}
+                  className="mt-4"
+                >
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.1em] text-[var(--muted)]">Gameplay Demo</p>
+                  <video
+                    src={project.demoVideo}
+                    controls
+                    muted
+                    playsInline
+                    className="w-full rounded-xl border border-[var(--line)] bg-[#121212]"
+                    style={{ maxHeight: "260px", objectFit: "contain" }}
+                  />
+                </motion.div>
               )}
 
-              <div className="flex items-start gap-3 mb-4">
-                <span className="text-3xl">{project.icon}</span>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap mb-1">
-                    <h3 className="text-white font-black text-base group-hover:text-orange-400 transition-colors">{project.title}</h3>
-                    <span className={`text-xs font-semibold px-2 py-0.5 rounded-full border ${project.tagStyle}`}>
-                      {project.tag}
-                    </span>
-                  </div>
-                  <p className="text-slate-500 text-xs">{project.period}</p>
-                </div>
-              </div>
-
-              <p className="text-slate-400 text-sm leading-relaxed mb-4">{project.description}</p>
-
-              {/* Platforms */}
-              <div className="flex gap-1.5 flex-wrap mb-3">
-                {project.platforms.map((p) => (
-                  <span key={p} className="text-xs text-slate-500 bg-gray-900 border border-white/5 px-2 py-0.5 rounded-md">
-                    {p}
-                  </span>
-                ))}
-              </div>
-
-              {/* Tech */}
-              <div className="flex gap-1.5 flex-wrap mb-4">
-                {project.tech.map((t) => (
-                  <span key={t} className="text-xs text-indigo-300 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-full font-medium">
-                    {t}
-                  </span>
-                ))}
-              </div>
-
-              {/* Expandable bullets */}
-              <AnimatePresence>
-                {expanded === index && (
-                  <motion.ul
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden space-y-2 mb-4"
+              {/* tech pills */}
+              <motion.div
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+                variants={{ hidden: {}, show: { transition: { staggerChildren: 0.04 } } }}
+                className="mt-5 flex flex-wrap gap-2"
+              >
+                {project.tech.map((tool) => (
+                  <motion.span
+                    key={tool}
+                    variants={{
+                      hidden: { opacity: 0, scale: 0.85 },
+                      show:   { opacity: 1, scale: 1, transition: { duration: 0.25 } },
+                    }}
+                    whileHover={{ scale: 1.07, borderColor: "rgba(255,122,61,0.45)" }}
+                    className="cursor-default rounded-full border border-[var(--line)] bg-[#1b1b1b] px-3 py-1 text-xs font-semibold text-[var(--muted)] transition-colors"
                   >
-                    {project.bullets.map((b, j) => (
-                      <li key={j} className="text-slate-400 text-xs flex gap-2 leading-relaxed">
-                        <span className="text-orange-400 flex-shrink-0 mt-0.5">›</span>
-                        {b}
-                      </li>
-                    ))}
-                  </motion.ul>
-                )}
-              </AnimatePresence>
+                    {tool}
+                  </motion.span>
+                ))}
+              </motion.div>
 
-              <div className="mt-auto">
-                <button
-                  onClick={() => setExpanded(expanded === index ? null : index)}
-                  className="text-xs text-slate-500 hover:text-orange-400 font-semibold transition-colors flex items-center gap-1"
-                >
-                  {expanded === index ? "↑ Less" : "↓ Details"}
-                </button>
+              {/* links */}
+              <div className="mt-6 flex flex-wrap gap-2">
+                {project.demoUrl ? (
+                  <motion.a
+                    href={project.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.04, boxShadow: "0 0 14px rgba(255,122,61,0.3)" }}
+                    whileTap={{ scale: 0.97 }}
+                    className="rounded-full border border-[var(--accent)] bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white"
+                  >
+                    {project.demoLabel ?? "Live Demo"}
+                  </motion.a>
+                ) : (
+                  <span className="rounded-full border border-[var(--line)] bg-[#1c1c1c] px-4 py-2 text-xs font-semibold text-[var(--muted)]">
+                    Demo Coming Soon
+                  </span>
+                )}
+
+                {project.codeUrl ? (
+                  <motion.a
+                    href={project.codeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.04, borderColor: "rgba(255,255,255,0.3)" }}
+                    whileTap={{ scale: 0.97 }}
+                    className="rounded-full border border-[var(--line)] bg-[#1b1b1b] px-4 py-2 text-xs font-semibold text-[var(--ink)]"
+                  >
+                    {project.codeLabel ?? "Source Code"}
+                  </motion.a>
+                ) : (
+                  <span className="rounded-full border border-[var(--line)] bg-[#1b1b1b] px-4 py-2 text-xs font-semibold text-[var(--muted)]">
+                    Private Client Work
+                  </span>
+                )}
+
+                {project.extraLinks?.map((link) => (
+                  <motion.a
+                    key={`${project.name}-${link.label}`}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.04, borderColor: "rgba(255,255,255,0.3)" }}
+                    whileTap={{ scale: 0.97 }}
+                    className="rounded-full border border-[var(--line)] bg-[#1b1b1b] px-4 py-2 text-xs font-semibold text-[var(--ink)]"
+                  >
+                    {link.label}
+                  </motion.a>
+                ))}
               </div>
-            </motion.div>
+
+              {/* BrokeTogether store section */}
+              {project.name === "BrokeTogether" && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                  viewport={{ once: true }}
+                  className="mt-6 rounded-xl border border-[var(--line)] bg-[#111111] p-4"
+                >
+                  <p className="text-xs font-semibold uppercase tracking-[0.1em] text-[var(--muted)]">Mobile Store Launch</p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {project.stores?.appStore ? (
+                      <motion.a
+                        href={project.stores.appStore}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.04 }}
+                        className="rounded-full border border-[var(--accent)] bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white"
+                      >
+                        App Store
+                      </motion.a>
+                    ) : (
+                      <span className="rounded-full border border-[var(--line)] bg-[#1b1b1b] px-4 py-2 text-xs font-semibold text-[var(--muted)]">
+                        App Store (Soon)
+                      </span>
+                    )}
+                    {project.stores?.playStore ? (
+                      <motion.a
+                        href={project.stores.playStore}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.04 }}
+                        className="rounded-full border border-[var(--accent)] bg-[var(--accent)] px-4 py-2 text-xs font-semibold text-white"
+                      >
+                        Google Play
+                      </motion.a>
+                    ) : (
+                      <span className="rounded-full border border-[var(--line)] bg-[#1b1b1b] px-4 py-2 text-xs font-semibold text-[var(--muted)]">
+                        Google Play (Soon)
+                      </span>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </motion.article>
           ))}
         </div>
 
-        {/* BrokeTogether banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          viewport={{ once: true }}
-          className="mt-14 relative rounded-2xl overflow-hidden border border-orange-500/20"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-orange-950/60 via-red-950/40 to-gray-950" />
-          <div className="relative px-8 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <p className="text-orange-400 text-xs font-bold uppercase tracking-widest mb-2">🚀 Coming Soon</p>
-              <h3 className="text-white text-2xl font-black mb-1">BrokeTogether 💸</h3>
-              <p className="text-slate-400 text-sm max-w-md">
-                The simplest way to track and split shared expenses. Built for roommates, friends, and anyone who&apos;s been burned by splitting bills.
-              </p>
-            </div>
-            <div className="flex flex-col gap-2 flex-shrink-0">
-              <div className="flex items-center gap-2 bg-white/5 border border-white/10 text-white px-5 py-2.5 rounded-xl text-sm font-semibold">
-                🍎 App Store — iOS
-              </div>
-              <div className="flex items-center gap-2 bg-white/5 border border-white/10 text-white px-5 py-2.5 rounded-xl text-sm font-semibold">
-                💻 Mac App Store
-              </div>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );
