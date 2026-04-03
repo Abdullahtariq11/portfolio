@@ -23,7 +23,7 @@ type Project = {
 
 const projects: Project[] = [
   {
-    name: "BrokeTogether",
+    name: "Broke Together",
     status: "Product in development",
     period: "Nov 2025 - Jan 2026",
     description:
@@ -168,52 +168,63 @@ export default function Projects() {
               {!project.demoVideo && (
                 <div className="mt-5">
                   {project.mobileScreenshots ? (
-                    /* ── Portrait / mobile screenshot strip ── */
-                    <div className="overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                      <div className="flex gap-3" style={{ width: "max-content" }}>
-                        {project.images.map((src, idx) => (
-                          <motion.div
-                            key={src}
-                            initial={{ opacity: 0, y: 12 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.3, delay: idx * 0.06 }}
-                            viewport={{ once: true }}
-                            whileHover={{ y: -4, scale: 1.02 }}
-                            className="flex-shrink-0 overflow-hidden rounded-2xl border border-[var(--line)] bg-[#121212] shadow-lg"
-                            style={{ width: 130 }}
-                          >
-                            <Image
-                              src={src}
-                              alt={`${project.name} screen ${idx + 1}`}
-                              width={390}
-                              height={844}
-                              className="w-full object-cover"
-                            />
-                          </motion.div>
-                        ))}
-                      </div>
+                    /* ── Portrait / mobile screenshots grid ── */
+                    <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+                      {project.images.map((src, idx) => (
+                        <motion.div
+                          key={src}
+                          initial={{ opacity: 0, y: 12 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: idx * 0.06 }}
+                          viewport={{ once: true }}
+                          whileHover={{ y: -4, scale: 1.02 }}
+                          className="overflow-hidden rounded-2xl border border-[var(--line)] bg-[#121212] shadow-lg"
+                        >
+                          <Image
+                            src={src}
+                            alt={`${project.name} screen ${idx + 1}`}
+                            width={390}
+                            height={844}
+                            className="w-full object-cover"
+                          />
+                        </motion.div>
+                      ))}
                     </div>
                   ) : (
                     /* ── Landscape carousel ── */
                     <>
                       <div className="relative overflow-hidden rounded-xl border border-[var(--line)] bg-[#121212]">
-                        <AnimatePresence mode="wait">
-                          <motion.div
-                            key={`${project.name}-${getSlide(project.name)}`}
-                            initial={{ opacity: 0, x: 12 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -12 }}
-                            transition={{ duration: 0.25 }}
-                          >
-                            <Image
-                              src={project.images[getSlide(project.name)]}
-                              alt={`${project.name} preview ${getSlide(project.name) + 1}`}
-                              width={1200}
-                              height={720}
-                              className="h-48 w-full object-cover md:h-52"
-                            />
-                          </motion.div>
-                        </AnimatePresence>
+                        <motion.div
+                          drag="x"
+                          dragConstraints={{ left: 0, right: 0 }}
+                          onDragEnd={(event, info) => {
+                            const threshold = 50;
+                            if (info.offset.x > threshold) {
+                              setSlide(project.name, getSlide(project.name) - 1, project.images.length);
+                            } else if (info.offset.x < -threshold) {
+                              setSlide(project.name, getSlide(project.name) + 1, project.images.length);
+                            }
+                          }}
+                          className="cursor-grab active:cursor-grabbing"
+                        >
+                          <AnimatePresence mode="wait">
+                            <motion.div
+                              key={`${project.name}-${getSlide(project.name)}`}
+                              initial={{ opacity: 0, x: 12 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              exit={{ opacity: 0, x: -12 }}
+                              transition={{ duration: 0.25 }}
+                            >
+                              <Image
+                                src={project.images[getSlide(project.name)]}
+                                alt={`${project.name} preview ${getSlide(project.name) + 1}`}
+                                width={1200}
+                                height={720}
+                                className="h-56 w-full object-cover md:h-52"
+                              />
+                            </motion.div>
+                          </AnimatePresence>
+                        </motion.div>
 
                         {/* prev / next — only show when more than one image */}
                         {project.images.length > 1 && (
@@ -223,7 +234,7 @@ export default function Projects() {
                               whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.9 }}
                               onClick={() => setSlide(project.name, getSlide(project.name) - 1, project.images.length)}
-                              className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full border border-[var(--line)] bg-[#101010cc] px-2.5 py-1.5 text-xs font-semibold text-[var(--ink)]"
+                              className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full border border-[var(--line)] bg-[#101010cc] px-3 py-2 text-sm font-semibold text-[var(--ink)] md:px-2.5 md:py-1.5 md:text-xs"
                               aria-label={`Previous ${project.name} image`}
                             >
                               ←
@@ -233,7 +244,7 @@ export default function Projects() {
                               whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.9 }}
                               onClick={() => setSlide(project.name, getSlide(project.name) + 1, project.images.length)}
-                              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full border border-[var(--line)] bg-[#101010cc] px-2.5 py-1.5 text-xs font-semibold text-[var(--ink)]"
+                              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full border border-[var(--line)] bg-[#101010cc] px-3 py-2 text-sm font-semibold text-[var(--ink)] md:px-2.5 md:py-1.5 md:text-xs"
                               aria-label={`Next ${project.name} image`}
                             >
                               →

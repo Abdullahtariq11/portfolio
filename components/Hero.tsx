@@ -158,10 +158,10 @@ export default function Hero() {
                   show:   { opacity: 1, x: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } },
                 }}
                 whileHover={{ x: 3, borderColor: "rgba(255,122,61,0.35)" }}
-                className="flex items-center justify-between rounded-xl border border-[var(--line)] bg-[#1a1a1a] px-4 py-3 transition-colors"
+                className="flex min-w-0 flex-col gap-2 rounded-xl border border-[var(--line)] bg-[#1a1a1a] px-4 py-3 transition-colors md:flex-row md:items-center md:justify-between"
               >
                 <span className="text-xs uppercase tracking-[0.16em] text-[var(--muted)]">{label}</span>
-                <span className="text-sm font-semibold text-[var(--ink)]">{value}</span>
+                <span className="text-sm font-semibold text-[var(--ink)] md:text-right md:max-w-[55%] md:break-words">{value}</span>
               </motion.div>
             ))}
           </motion.div>
